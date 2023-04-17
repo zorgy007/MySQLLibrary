@@ -1,6 +1,6 @@
 import datetime
 import os
-from msvcrt import getch
+from msvcrt import getch  # библиотека для отслеживания нажатий клавиш
 
 
 from peewee import MySQLDatabase, InternalError as PeeweeInternalError
@@ -11,15 +11,14 @@ from Library.library import Library
 class Ui:
 
     def __init__(self):
-        self.library = Library(
-            data_base=MySQLDatabase('library', user='hanaan', password='X9G-Hd5-vt6-TMV', host='localhost', port=3306))
+        self.library = Library(data_base=MySQLDatabase('library', user='hanaan', password='X9G-Hd5-vt6-TMV', host='localhost', port=3306))
         self.library.connect()
 
     def print_all(self):
         os.system('cls')
-        print("Нажмите <Esc> для выхода в главное меню или <Enter> для вывода всех книг")
-        key = ord(getch())
-        if key == 27:
+        print("Нажмите 6 для выхода в главное меню или <Enter> для вывода всех книг")
+        key = ord(getch())  # отслеживаем нажатие клавиши
+        if key == 54:
             return
         while True:
             os.system('cls')
@@ -29,9 +28,9 @@ class Ui:
                 (book_id, book) = result
                 formatted_book = "%s: %s, %s %s" % (book_id, book.title, book.author, book.year)
                 print(formatted_book)
-            print("Нажмите <Esc> для выхода или <Enter> для повторного вывода")
+            print("Нажмите 6 для выхода или <Enter> для повторного вывода")
             key = ord(getch())
-            if key == 27:
+            if key == 54:
                 return
 
     def find_books_year(self):
@@ -40,9 +39,9 @@ class Ui:
             year = input("Введите год книги:")
             book = self.library.find_by_year(year)
             if not book:
-                print('Книга с данным годом не найдена.\nХотите попробовать другой год - 1 \nили выйти - <Esc>')
+                print('Книга с данным годом не найдена.\nХотите попробовать другой год - 1 \nили выйти - 6')
                 key = ord(getch())
-                if key == 27:
+                if key == 54:
                     return
                 else:
                     self.find_books_year()
@@ -55,9 +54,9 @@ class Ui:
             author = input("Введите автора книги:")
             book = self.library.find_by_author(author)
             if not book:
-                print('Книга с данным автором не найдена.\nХотите попробовать другого автора - 1 \nили выйти - <Esc>')
+                print('Книга с данным автором не найдена.\nХотите попробовать другого автора - 1 \nили выйти - 6')
                 key = ord(getch())
-                if key == 27:
+                if key == 54:
                     return
                 else:
                     self.find_books_author()
@@ -71,9 +70,9 @@ class Ui:
             book = self.library.find_by_title(title)
             if not book:
                 print(
-                    'Книга с данным названием не найдена.\nХотите попробовать другое название - 1 \nили выйти - <Esc>')
+                    'Книга с данным названием не найдена.\nХотите попробовать другое название - 1 \nили выйти - 6')
                 key = ord(getch())
-                if key == 27:
+                if key == 54:
                     return
                 else:
                     self.find_books_title()
@@ -85,9 +84,9 @@ class Ui:
         while True:
             os.system("cls")
             print(
-                "Произвести поиск по \nНазванию - 1 \nАвтору - 2 \nГоду - 3 \nИли <Esc> для выхода \nВведите соотвествующее число: ")
+                "Произвести поиск по \nНазванию - 1 \nАвтору - 2 \nГоду - 3 \nИли 6 для выхода \nВведите соотвествующее число: ")
             search = ord(getch())
-            if search == 27:
+            if search == 54:
                 return
             elif search == 51:
                 self.find_books_year()
@@ -95,9 +94,9 @@ class Ui:
                 self.find_books_author()
             elif search == 49:
                 self.find_books_title()
-            print("Нажмите <Esc> для выхода или <Enter> для повторного поиска")
+            print("Нажмите 6 для выхода или <Enter> для повторного поиска")
             key = ord(getch())
-            if key == 27:
+            if key == 54:
                 return
 
     def change_title(self, book_number, book):
@@ -129,9 +128,9 @@ class Ui:
 
     def update_book(self):
         os.system("cls")
-        print("Нажмите <Esc> для выхода в главное меню или <Enter> для продолжения изменения книги")
+        print("Нажмите 6 для выхода в главное меню или <Enter> для продолжения изменения книги")
         key = ord(getch())
-        if key == 27:
+        if key == 54:
             return
         while True:
             os.system('cls')
@@ -142,17 +141,17 @@ class Ui:
             book = self.library.get_at(book_id)
 
             while not Book:
-                print("Книга не найдена. Нажмите <Esc> для выхода\n Или <Enter> если хотите попробовать еще раз")
+                print("Книга не найдена. Нажмите 6 для выхода\n Или <Enter> если хотите попробовать еще раз")
                 key = ord(getch())
-                if key == 27:
+                if key == 54:
                     return
                 if key == 13:
                     break
 
             print("Изменение книги: ", book,
-                  "\nЧто необходимо изменить? \n1-Название \n2-Автор \n3-Год \n<Esc> для выхода")
+                  "\nЧто необходимо изменить? \n1-Название \n2-Автор \n3-Год \n6 для выхода")
             change_option = ord(getch())
-            if change_option == 27:
+            if change_option == 54:
                 return
             if change_option == 49:
                 self.change_title(book_id, book)
@@ -169,39 +168,39 @@ class Ui:
                     self.library.update_at(book_id, book=book)
                     print("Изменена книга ", book)
                 else:
-                    print("Нажмите <Esc> для выхода")
+                    print("Нажмите 6 для выхода")
                     key = ord(getch())
-                    if key == 27:
+                    if key == 54:
                         return
 
     def add_book(self):
         os.system("cls")
         while True:
-            print("Нажмите <Esc> для выхода в главное меню или <Enter> для продолжения")
+            print("Нажмите 6 для выхода в главное меню или <Enter> для продолжения")
             key = ord(getch())
             s = key
-            if key == 27:
+            if key == 54:
                 break
             os.system('cls')
             title = input("Введите название книги: ")
             if title == '':
                 while title == '':
                     print(
-                        'Введено пустое поле\n Введите 1 чтобы попробовать еще раз или <Esc> если хотите выйти: ')
+                        'Введено пустое поле\n Введите 1 чтобы попробовать еще раз или 6 если хотите выйти: ')
                     key = ord(getch())
                     if key == 49:
                         self.add_book()
-                    elif key == 27:
+                    elif key == 54:
                         return
             author = input("Введите автора книги: ")
             if author == '':
                 while author == '':
                     print(
-                        'Введено пустое поле\n Введите 1 чтобы попробовать еще раз или <Esc> если хотите выйти:')
+                        'Введено пустое поле\n Введите 1 чтобы попробовать еще раз или 6 если хотите выйти:')
                     key = ord(getch())
                     if key == 49:
                         author = input("Введите автора книги еще раз: ")
-                    elif key == 27:
+                    elif key == 54:
                         return
             try:
                 year = int(input("Введите год издания книги:"))
@@ -222,25 +221,25 @@ class Ui:
             else:
                 print('Книга не добавлена')
 
-            print("Нажмите <Esc> для выхода")
+            print("Нажмите 6 для выхода")
             key = ord(getch())
-            if key == 27:
+            if key == 54:
                 break
 
     def delete_book(self):
         os.system("cls")
-        print("Нажмите <Esc> для выхода в главное меню или <Enter> для продолжения")
+        print("Нажмите 6 для выхода в главное меню или <Enter> для продолжения")
         key = ord(getch())
-        if key == 27:
+        if key == 54:
             return
         while True:
             os.system("cls")
             book_number = input("Введите номер книги для удаления:")
             book = self.library.get_at(book_number)
             if not book:
-                print("Книга не найдена\n Повторить поиск - 1 \n Выйти - <Esc>")
+                print("Книга не найдена\n Повторить поиск - 1 \n Выйти - 6")
                 key = ord(getch())
-                if key == 27:
+                if key == 54:
                     return
                 else:
                     self.delete_book()
@@ -249,9 +248,9 @@ class Ui:
             if change_option == 49:
                 self.library.remove_at(book_number)
                 print("Книга %s была удалена" % book)
-            print("Нажмите <Esc> для выхода")
+            print("Нажмите 6 для выхода")
             key = ord(getch())
-            if key == 27:
+            if key == 54:
                 break
             else:
                 print('Удалить еще одну книгу?')
@@ -283,11 +282,11 @@ class Ui:
                     '3 - Изменить книгу\n'
                     '4 - Удалить книгу\n'
                     '5 - Добавить книгу\n'
-                    "<Esc>- для выхода\n"
+                    "6 - Выход из программы\n" # программа не обрабатывает кнопку esc, поэтому используется 6
                     ': ', end=''
                 )
                 key = ord(getch())
-                if key == 27:
+                if key == 54:
                     break
                 elif key == 49:
                     self.print_all()

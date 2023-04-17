@@ -5,8 +5,7 @@ from Book.book import Book
 
 
 class Library:
-    def __init__(self,
-                 data_base=MySQLDatabase('library', user='hanaan', password='X9G-Hd5-vt6-TMV', host='localhost', port=3306)):
+    def __init__(self, data_base=MySQLDatabase('library', user='hanaan', password='X9G-Hd5-vt6-TMV', host='localhost', port=3306)):
         self.__data_base = data_base
         self.__library_model = LibraryModel()
         self.__library_model._meta.database = self.__data_base
